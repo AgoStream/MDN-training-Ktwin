@@ -12,6 +12,11 @@ SRC:
 - metrics retrieval stores a set of functions used in metrics extraction
 - models contains every function used to define and train MDNs
 - train stores the training core definition
+
+SCRIPTS:
+- generate_requests used to fetch metrics
+- real_time_requests will be used for the continous learning upgrade
+- train_all trains every MDN for every service in list
 ---
 
 ## Quick Start
@@ -36,7 +41,7 @@ python scripts/generate_requests.py -r 5 -n 300 -s 3 -d 5 -u http://127.0.0.1:80
 
 ---
 
-## ⚙️ Features
+## Features
 
 - Modular MDN architecture (Keras + TFP)
 - Weibull loss for latency modeling

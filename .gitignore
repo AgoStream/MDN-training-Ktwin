@@ -12,6 +12,7 @@ __pycache__/
 saved_models/
 data/full_dataset/
 data/dataset/
+data/new_dataset/
 plots/
 testtext.txt
 VSmdn/
