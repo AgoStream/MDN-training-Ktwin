@@ -1,0 +1,19 @@
+# Virtual env
+.venv/
+__pycache__/
+.ipynb_checkpoints/
+*.h5
+*.ckpt
+*.log
+*.tmp
+*.npy
+*.npz
+*.pkl
+saved_models/
+data/full_dataset/
+data/dataset/
+plots/
+testtext.txt
+VSmdn/
+notebooks/
+requirements_old.txt
