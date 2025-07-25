@@ -3,7 +3,7 @@ import sys
 from pathlib import Path
 import os
 
-services = ["fe", "auth", "bill", "ms1", "ms2"]
+services = ["frontend", "auth", "bill", "ms1", "ms2"]
 root_dir = Path(__file__).resolve().parent
 project_root = root_dir.parent  # cartella che contiene "src/"
 

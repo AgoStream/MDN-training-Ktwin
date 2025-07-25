@@ -51,7 +51,7 @@ elif proc_time_col not in df.columns or delay_col not in df.columns:
 else:
     df[proc_time_col] = (df[proc_time_col] + df[delay_col]) / 1e3
     
-df = df[['rps', 'rps_eff', 'rep', proc_time_col]] # keep only relevant columns
+df = df[[f"rps_{service}", f"rps_eff_{service}", f"rep_{service}", proc_time_col]] # keep only relevant columns
 
 df_test = []
 
@@ -66,14 +66,14 @@ for k in range(1, 6):
             continue
 
         rps_test = np.random.choice(segment, 1)[0]
-        available_rps = df[df.rep == k]['rps'].unique()
+        available_rps = df[df[f"rep_{service}"] == k][f"rps_{service}"].unique()
 
         if len(available_rps) == 0:
             print(f"  No RPS available for replica {k}")
             continue
 
         closest_rps = available_rps[np.abs(available_rps - rps_test).argmin()] # find the closest RPS in the available ones
-        subset = df[(df.rep == k) & (df.rps == closest_rps)]
+        subset = df[(df[f"rep_{service}"] == k) & (df[f"rps_{service}"] == closest_rps)]
         print(f"  Trying closest rps = {closest_rps:.2f} for rep = {k} ⇒ Found {len(subset)} rows.")
         
         if not subset.empty:
@@ -85,11 +85,11 @@ df_train = df.sample(frac=1)
 
 print("Test RPS per replica:")
 for rep in range(1, 6):
-    print(f"Replica {rep}:", df_test[df_test.rep == rep].rps.unique())
+    print(f"Replica {rep}:", df_test[df_test[f"rep_{service}"] == rep][f"rps_{service}"].unique())
 
 
 target = df_train[proc_time_col]
-features = df_train[['rps_eff', 'rep']]
+features = df_train[[f'rps_eff_{service}', f'rep_{service}']]
 
 model, norm_layer = build_mdn_model(input_shape=(2,), n_components=N_COMP)
 
