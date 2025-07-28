@@ -28,7 +28,7 @@ def send_requests(uri, data,i):
         result = f'{start_req_time},{req_time},{i}\n'
     return result
 
-def write_csv_continous(data, file_path):
+def write_csv_continuous(data, file_path):
 	with open(file_path,'a', newline = '') as out_file:
 		writer = csv.writer(out_file, quoting=csv.QUOTE_NONE, escapechar=' ')
 		writer.writerow(data)
@@ -43,7 +43,6 @@ if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description="HTTP Request Generator with fixed rps", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 	parser.add_argument("-r", "--rps", type=float, help="NORMALIZED request per second",required=True)
 
-	# try to find a way to make this into a fixed ssh tunnel port
 	parser.add_argument("-u", "--uri", help="HTTP server endpoint",required=True)
 	#uri = "http://127.0.0.1:8000/"
 	# parser under here is quite useless since we want to keep sending requests
@@ -135,7 +134,7 @@ if __name__ == '__main__':
 		time.sleep(5)
 		r_string= res[-1].result()
 		print(r_string.rstrip())
-		write_csv_continous([r_string.rstrip()], res_file)
+		write_csv_continuous([r_string.rstrip()], res_file)
 
 		
 		end = time.time()
@@ -154,7 +153,7 @@ if __name__ == '__main__':
 		for service in services:
 			traces = get_traces(service, end_unix, start_unix)
 		
-		json_to_csv(traces, csv_filename)
+		json_to_csv_continuous(traces, csv_filename)
     
 	with open(res_file, "r", newline='') as out_file:
 		lines = out_file.readlines()

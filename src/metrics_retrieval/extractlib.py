@@ -75,13 +75,26 @@ def extract_data(span):
     }
 
 
-def json_to_csv(traces, csv_filename):
+def json_to_csv_continuous(traces, csv_filename):
     header = ["trace_id", "span_id", "start_time", "duration", "client", "server", "grpc_path", "http_status_code",
              "grpc_message", "http_method", "response_size", "request_size", "node_id"]
 
     with open(csv_filename, mode="a", newline="") as csv_file:
         writer = csv.DictWriter(csv_file, fieldnames=header)
         #writer.writeheader()
+
+        for trace in traces:
+            for span in trace["spans"]:
+                data = extract_data(span)
+                writer.writerow(data)
+
+def json_to_csv(traces, csv_filename):
+    header = ["trace_id", "span_id", "start_time", "duration", "client", "server", "grpc_path", "http_status_code",
+              "grpc_message", "http_method", "response_size", "request_size", "node_id"]
+
+    with open(csv_filename, mode="w", newline="") as csv_file:
+        writer = csv.DictWriter(csv_file, fieldnames=header)
+        writer.writeheader()
 
         for trace in traces:
             for span in trace["spans"]:
